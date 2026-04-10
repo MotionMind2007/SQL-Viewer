@@ -32,7 +32,8 @@ To run this project locally:
    git clone [https://github.com/your-username/sql-viewer.git](https://github.com/your-username/sql-viewer.git)
 
 2. Navigate to the folder:
-    ```cd sql-viewer
+    ```bash
+    cd SQL-Viewer
 
 3. Open index.html in any modern web browser.
 
