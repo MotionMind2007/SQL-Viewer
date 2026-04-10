@@ -41,10 +41,14 @@ To run this project locally:
 The viewer features a smart horizontal scroll engine for data tables. Even with massive columns, you can smoothly navigate through your data on any mobile device without UI breakage.
 
 ## 👨‍💻 Developed By
-MD. Saiful Alom Siam Software Developer & Founder of Motion Mind
 
-    -Portfolio: motion-mind-portfolio.vercel.app
-    -GitHub: [MotionMind2007]
+<p align="left">
+  <img src="https://img.shields.io/badge/Developer-MD._Saiful_Alom_Siam-black?style=for-the-badge&logo=github&logoColor=white" />
+  <img src="https://img.shields.io/badge/Founder-Motion_Mind-111?style=for-the-badge" />
+</p>
+
+- **Portfolio:** [motion-mind-portfolio.vercel.app](https://motion-mind-portfolio.vercel.app/)
+- **GitHub:** [@MotionMind2007](https://github.com/MotionMind2007)
 
 ## 📄 License
 This project is licensed under the MIT License - see the LICENSE file for details.
