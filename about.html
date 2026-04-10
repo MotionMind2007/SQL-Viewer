@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - SQL Viewer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <div class="menu" id="menu">
+        <button id="menu-btn" class="menu-btn"></button>
+    </div>
+    <div class="overlay"></div>
+    <div class="menu-items">
+        <div class="app">
+            <p class="nav-label"><span>Main Features</span></p>
+            <button class="p-button" id="sql-view-btn">SQL View</button>
+            <button id="make-note-btn" class="p-button">Make a note</button>
+        </div>
+        <div class="service">
+            <p class="nav-label"><span>Preferences</span></p>
+            <button class="heighlight p-button" id="about">about</button>
+            <button class="p-button" id="help">help</button>
+        </div>
+    </div>
+    <main class="container">
+        <div style="color: #ccc; line-height: 1.8; font-size: 15px; padding: 10px;">
+            <p>
+                <strong style="color: #fff; font-size: 20px;">SQL Viewer</strong><br>
+                <span style="color: #555;">A minimalist tool powered by <strong>Motion Mind</strong></span>
+            </p>
+
+            <p>
+                <strong>SQL Viewer</strong> is a web-based utility designed for quick and efficient database inspection. 
+                    It provides a streamlined environment to view and analyze your SQLite data with zero overhead.
+            </p>
+
+            <div style="border: 1px solid #222; padding: 15px; border-radius: 8px; margin: 20px 0; background: #050505;">
+                <h4 style="color: #fff; margin-top: 0;">Why use SQL Viewer?</h4>
+                <p style="font-size: 14px; margin-bottom: 0;">
+                    This tool is referred by the <strong>Motion Mind</strong> brand for users who prioritize 
+                    security and privacy. Since it works entirely within your browser, your sensitive 
+                    SQL data never leaves your local machine, ensuring a highly secure viewing experience.
+                </p>
+            </div>
+
+            <p>
+                <strong>Key Highlights:</strong>
+                <ul style="list-style-type: square; padding-left: 20px; color: #888;">
+                    <li>Privacy-first architecture (100% Client-side).</li>
+                    <li>Highly secure SQL data checking.</li>
+                    <li>Minimalist interface for distraction-free work.</li>
+                </ul>
+            </p>
+
+            <div style="margin-top: 40px; padding-top: 25px; border-top: 1px solid #111;">
+                <p style="font-size: 12px; color: #444; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; text-align: center;">Developed By</p>
+    
+                <div style="background: linear-gradient(145deg, #080808, #050505); border: 1px solid #1a1a1a; padding: 20px; border-radius: 12px; text-align: center;">
+                    <h3 style="color: #fff; margin: 0; font-size: 18px; font-weight: 600;">MD. Saiful Alom Siam</h3>
+                    <p style="color: #888; font-size: 13px; margin: 5px 0 15px 0;">Software Developer & Founder of Motion Mind</p>
+        
+                    <a href="https://motion-mind-portfolio.vercel.app/" target="https://motion-mind-portfolio.vercel.app/" 
+                        style="display: inline-flex; align-items: center; gap: 8px; color: #ccc; text-decoration: none; font-size: 13px; background: #111; border: 1px solid #333; padding: 8px 16px; border-radius: 6px; transition: 0.3s;">
+                        <span>Explore Portfolio</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                    </a>
+                </div>
+    
+                <p style="margin-top: 20px; font-size: 11px; color: #333; text-align: center;">
+                    Driven by innovation, built for simplicity.
+                </p>
+            </div>
+
+            <p style="margin-top: 100px; font-size: 12px; color: #444; text-align: center; letter-spacing: 1px;">
+                © 2026 MOTION MIND BRAND. ALL RIGHTS RESERVED.
+            </p>
+        </div>
+    </main>
+
+    <script type="module" src="./js/style.js"></script>
+</body>
+</html>

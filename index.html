@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Viewer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <div class="menu" id="menu">
+        <button id="menu-btn" class="menu-btn"></button>
+    </div>
+    <div class="overlay"></div>
+    <div class="menu-items">
+        <div class="app">
+            <p class="nav-label"><span>Main Features</span></p>
+            <button class="heighlight p-button" id="sql-view-btn">SQL View</button>
+            <button id="make-note-btn" class="p-button">Make a note</button>
+        </div>
+        <div class="service">
+            <p class="nav-label"><span>Preferences</span></p>
+            <button class="p-button" id="about">about</button>
+            <button class="p-button" id="help">help</button>
+        </div>
+    </div>
+    <main class="container">
+
+        <header>
+            <h1 class="logo">SQL Viewer from <span class="accent">Motion Mind</span></h1>
+            <p class="subtitle">Minimalist SQLite Viewer & Note Engine</p>
+        </header>
+
+        <section class="grid">
+            <div class="card">
+                <div class="card-header">
+                    <h3>SQLite Viewer</h3>
+                </div>
+                <div class="upload-box">
+                    <input type="file" id="db-upload" hidden accept=".db, .sqlite">
+                    <label for="db-upload" class="upload-label">Open a Database File</label>
+                </div>
+                <div id="db-output" class="output-console">
+                    <span class="placeholder">No Database Selected! ⚠</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
+    <script type="module" src="./js/main.js"></script>
+    <script type="module" src="./js/style.js"></script>
+</body>
+</html>

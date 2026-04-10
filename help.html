@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help - SQL Viewer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <div class="menu" id="menu">
+        <button id="menu-btn" class="menu-btn"></button>
+    </div>
+    <div class="overlay"></div>
+    <div class="menu-items">
+        <div class="app">
+            <p class="nav-label"><span>Main Features</span></p>
+            <button class="p-button" id="sql-view-btn">SQL View</button>
+            <button id="make-note-btn" class="p-button">Make a note</button>
+        </div>
+        <div class="service">
+            <p class="nav-label"><span>Preferences</span></p>
+            <button class="p-button" id="about">about</button>
+            <button class="heighlight p-button" id="help">help</button>
+        </div>
+    </div>
+
+    <main class="container">
+        <div style="color: #ccc; line-height: 1.8; font-size: 14px; padding: 10px; font-family: 'Inter', sans-serif;">
+    
+            <div style="margin-bottom: 25px;">
+                <h4 style="color: #fff; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; font-weight: 600;">
+                    <span style="background: #222; color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 11px; border: 1px solid #333;">01</span> 
+                    How to Load a Database?
+                </h4>
+                <p style="margin-left: 35px; color: #888;">
+                    Go to the home page and click on the <strong>'Open a Database File'</strong> button. Select any <code>.db</code> or <code>.sqlite</code> file from your device to load the data instantly.
+                </p>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <h4 style="color: #fff; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; font-weight: 600;">
+                    <span style="background: #222; color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 11px; border: 1px solid #333;">02</span> 
+                    Navigating Tables
+                </h4>
+                <p style="margin-left: 35px; color: #888;">
+                    Once the file is loaded, you will see a list of all tables in the <strong>Sidebar</strong> on the left. Simply click on a table name to view its data grid on the right.
+                </p>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <h4 style="color: #fff; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; font-weight: 600;">
+                    <span style="background: #222; color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 11px; border: 1px solid #333;">03</span> 
+                    Pagination & Navigation
+                </h4>
+                <p style="margin-left: 35px; color: #888;">
+                    For large datasets, use the <strong>Prev/Next</strong> buttons at the top or bottom of the grid. To jump to a specific page, type the page number in the input box and press <strong>Enter</strong>.
+                </p>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <h4 style="color: #fff; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; font-weight: 600;">
+                    <span style="background: #222; color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 11px; border: 1px solid #333;">04</span> 
+                    Managing Notes
+                </h4>
+                <p style="margin-left: 35px; color: #888;">
+                    Use the <strong>'Make a note'</strong> section from the menu to write down your observations. Notes are auto-saved locally and can be downloaded as a <code>.txt</code> file using the download button.
+                </p>
+            </div>
+
+            <div style="background: #0a0a0a; display: flex; gap: 20px; padding: 15px; border-radius: 8px; border: 1px dashed #222; margin-top: 30px;">
+                <p style="font-size: 15px; color: #444; margin-bottom: 5px;">Found a bug or need a feature?</p>
+                <a href="https://www.facebook.com/saiful.siam.517946?rdid=EhdnzZNAGbvsOSkj&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1BdrUZBG5Z%2F#" target="_blank" style="color: #888; text-decoration: none; font-size: 12px; border: 1px solid #333; padding: 4px 10px; border-radius: 4px; transition: 0.3s;">
+                    Report via Facebook
+                </a>
+            </div>
+
+        </div>
+    </main>
+
+    <script type="module" src="./js/style.js"></script>
+</body>
+</html>
