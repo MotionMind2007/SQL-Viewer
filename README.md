@@ -30,3 +30,21 @@ To run this project locally:
 1. Clone the repository:
    ```bash
    git clone [https://github.com/your-username/sql-viewer.git](https://github.com/your-username/sql-viewer.git)
+
+2. Navigate to the folder:
+    ```cd sql-viewer
+
+3. Open index.html in any modern web browser.
+
+## Mobile Experience
+The viewer features a smart horizontal scroll engine for data tables. Even with massive columns, you can smoothly navigate through your data on any mobile device without UI breakage.
+
+## 👨‍💻 Developed By
+MD. Saiful Alom Siam Software Developer & Founder of Motion Mind
+
+    -Portfolio: motion-mind-portfolio.vercel.app
+    -GitHub: [MotionMind2007]
+
+## 📄 License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
