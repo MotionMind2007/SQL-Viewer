@@ -1,58 +1,81 @@
-# ?? SQL Viewer v2.0
+## SQL Viewer v2.0
+
+![License](https://img.shields.io/badge/license-MIT-white?style=flat-square)
+![Version](https://img.shields.io/badge/version-2.0.0-white?style=flat-square)
+![Status](https://img.shields.io/badge/status-active-green?style=flat-square)
 
 A professional-grade, high-performance **Open Source** SQLite database manager built for 2026. Manage, visualize, and edit your databases directly in the browser with zero installation.
 
-## ?? Key Features
-- **WASM Engine**: Powered by sql-wasm.js for desktop-class performance in a browser.
-- **Data Inspector**: Click any cell to inspect, copy, or live-edit data.
-- **Horizontal & Vertical Control**: Custom scroll logic with dedicated sidebar/header controls.
-- **Mobile Optimized**: Fully responsive UI with drawer-based navigation.
-- **Zero Privacy Risk**: All processing happens client-side. Your data never leaves your machine.
-- **Open Source**: Built for the community. Feel free to fork, improve, and share!
+**Live Deployment**: [https://sql-viewer-chi.vercel.app/](https://sql-viewer-chi.vercel.app/)
 
 ---
 
-## ??? How It Works (Process Map)
+## Key Features
+- **WASM Kernel**: Powered by sql-wasm.js for desktop-class performance in a browser environment.
+- **Universal Data Inspector**: Precise cell-level inspection, copying, and real-time editing.
+- **Bi-Directional Scroll Control**: Engineered for large datasets with smooth horizontal and vertical navigation.
+- **Mobile-Responsive Architecture**: Adaptive UI designed for seamless use across desktop and mobile devices.
+- **Air-Gapped Privacy**: 100% client-side processing. Your data never touches a server.
+- **Industry Standard UI**: Minimalist "Black & White" aesthetic focused on data clarity.
 
-Below is the logic flow of the SQL Viewer kernel:
+---
+
+## How It Works (Process Map)
+
+SQL Viewer implements a strictly client-side orchestration model to handle structured data.
 
 `mermaid
 graph TD
-    A[User Opens App] --> B[Environment Init]
-    B --> C{Mount SQLite File}
-    C -->|Upload| D[WASM Kernel Loading]
-    D --> E[Table Structure Mapping]
-    E --> F[Sidebar Population]
+    A[Launch App] --> B[Kernel Initialization]
+    B --> C{Mount SQLite Buffer}
+    C -->|Binary Sync| D[WASM VM Loading]
+    D --> E[Schema Discovery]
+    E --> F[Sidebar Dynamic Generation]
     
-    F --> G[Table Selection]
-    G --> H[SQL Execution SELECT *]
-    H --> I[UI Grid Rendering]
+    F --> G[Workspace Selection]
+    G --> H[Engine Execution: SELECT *]
+    H --> I[High-Performance Grid Render]
     
-    I --> J{Data Interaction}
-    J -->|Scroll| K[Horizontal/Vertical Scroll Container]
-    J -->|Click Cell| L[Inspector Panel Opens]
-    L --> M[Copy / Edit / Nullify]
-    M -->|Commit| N[SQL UPDATE Query Execution]
+    I --> J{Active Interaction}
+    J -->|Navigation| K[Smooth Scroll Orchestrator]
+    J -->|Selection| L[Inspector Overlay]
+    L --> M[Field Modification Buffer]
+    M -->|Commit Change| N[UPDATE Protocol Execution]
     N --> H
 `
 
 ---
 
-## ??? Tech Stack
+## Tech Stack
 - **Engine**: [SQL.js](https://github.com/sql-js/sql.js) (SQLite compiled to WebAssembly)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- **Typography**: Space Grotesk & JetBrains Mono
-- **Infrastructure**: Pure HTML5/JavaScript/CSS (No backend required)
+- **Framework**: Tailwind CSS (Utility-first styling)
+- **Runtime**: Vanilla JavaScript (ES2026)
+- **Typography**: Space Grotesk (Brand) & JetBrains Mono (Code)
 
 ---
 
-## ?? Getting Started
-1. Clone the repository: git clone <repo-url>
-2. Open index.html in any modern browser.
-3. Click **Mount DB** to start exploring.
+## Getting Started
 
-## ?? License
-This project is licensed under the MIT License - feel free to use it for personal or commercial projects.
+Build your own instance or run locally:
+
+1. **Clone the Repository**
+   `bash
+   git clone https://github.com/MotionMind2007/SQL-Viewer.git
+   `
+
+2. **Navigate & Execute**
+   `bash
+   cd SQL-Viewer
+   # Open index.html in any modern browser
+   `
+
+3. **Mount Data**
+   Click the **Mount DB** button to initialize the WASM kernel with your database.
 
 ---
-**Authenticated Session © 2026 Viewer Labs** ?????
+
+## License
+This project is licensed under the **MIT License**. We believe in the power of the open-source community. Fork it, improve it, and build the future of data management.
+
+---
+**Maintained by [MotionMind2007](https://github.com/MotionMind2007)** ?????
