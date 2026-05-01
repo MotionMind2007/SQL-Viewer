@@ -1,54 +1,58 @@
-# SQL Viewer â€” Motion Mind
+# ?? SQL Viewer v2.0
 
-A high-performance, minimalist, and privacy-focused SQLite database viewer built for developers. Powered by **SQL.js**, this tool allows you to inspect and analyze your database files entirely within your browser.
+A professional-grade, high-performance **Open Source** SQLite database manager built for 2026. Manage, visualize, and edit your databases directly in the browser with zero installation.
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Version](https://img.shields.io/badge/version-1.1.0-orange.svg)
-![Status](https://img.shields.io/badge/status-Production--Ready-success.svg)
+## ?? Key Features
+- **WASM Engine**: Powered by sql-wasm.js for desktop-class performance in a browser.
+- **Data Inspector**: Click any cell to inspect, copy, or live-edit data.
+- **Horizontal & Vertical Control**: Custom scroll logic with dedicated sidebar/header controls.
+- **Mobile Optimized**: Fully responsive UI with drawer-based navigation.
+- **Zero Privacy Risk**: All processing happens client-side. Your data never leaves your machine.
+- **Open Source**: Built for the community. Feel free to fork, improve, and share!
 
 ---
 
-## Features
+## ??? How It Works (Process Map)
 
-- **Privacy-First:** 100% Client-side processing. Your database files never leave your machine.
-- **Fast Navigation:** Instant table loading with efficient pagination for large datasets.
-- **Integrated Note Engine:** Keep track of your observations while inspecting data.
-- **Minimalist UI:** A distraction-free dark theme designed by **Motion Mind**.
-- **Responsive Design:** Optimized for both Desktop and Mobile (Horizontal scrolling enabled).
+Below is the logic flow of the SQL Viewer kernel:
 
-## Built With
+`mermaid
+graph TD
+    A[User Opens App] --> B[Environment Init]
+    B --> C{Mount SQLite File}
+    C -->|Upload| D[WASM Kernel Loading]
+    D --> E[Table Structure Mapping]
+    E --> F[Sidebar Population]
+    
+    F --> G[Table Selection]
+    G --> H[SQL Execution SELECT *]
+    H --> I[UI Grid Rendering]
+    
+    I --> J{Data Interaction}
+    J -->|Scroll| K[Horizontal/Vertical Scroll Container]
+    J -->|Click Cell| L[Inspector Panel Opens]
+    L --> M[Copy / Edit / Nullify]
+    M -->|Commit| N[SQL UPDATE Query Execution]
+    N --> H
+`
 
-- **Core Engine:** [SQL.js](https://github.com/sql-js/sql.js) (WebAssembly)
-- **Frontend:** Vanilla HTML5, CSS3, and JavaScript (ES6)
-- **Icons:** Custom SVG Icon Set
-- **Hosting:** Vercel
+---
 
-## Getting Started
+## ??? Tech Stack
+- **Engine**: [SQL.js](https://github.com/sql-js/sql.js) (SQLite compiled to WebAssembly)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Typography**: Space Grotesk & JetBrains Mono
+- **Infrastructure**: Pure HTML5/JavaScript/CSS (No backend required)
 
-To run this project locally:
+---
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/MotionMind2007/SQL-Viewer.git
+## ?? Getting Started
+1. Clone the repository: git clone <repo-url>
+2. Open index.html in any modern browser.
+3. Click **Mount DB** to start exploring.
 
-2. Navigate to the folder:
-    ```bash
-    cd SQL-Viewer
+## ?? License
+This project is licensed under the MIT License - feel free to use it for personal or commercial projects.
 
-3. Open index.html in any modern web browser.
-
-## Mobile Experience
-The viewer features a smart horizontal scroll engine for data tables. Even with massive columns, you can smoothly navigate through your data on any mobile device without UI breakage.
-
-## Developed By
-***MD Saiul Alom Siam***
-<p align="left">
-  <img src="https://img.shields.io/badge/Founder-Motion_Mind-111?style=for-the-badge" />
-</p>
-
-- **Portfolio:** [motion-mind-portfolio.vercel.app](https://motion-mind-portfolio.vercel.app/)
-- **GitHub:** [@MotionMind2007](https://github.com/MotionMind2007)
-
-## License
-This project is licensed under the MIT License - see the LICENSE file for details.
-
+---
+**Authenticated Session © 2026 Viewer Labs** ?????
