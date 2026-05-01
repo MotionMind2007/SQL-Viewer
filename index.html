@@ -3,56 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SQL Viewer</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./css/style.css">
-    <link rel="icon" type="image/svg+xml" href="icon.svg">
+    <title>SQL Nexus | Next-Gen DB Viewer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/dracula.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="sql_logo.png">
 </head>
-<body>
-    <div class="menu" id="menu">
-        <button id="menu-btn" class="menu-btn"></button>
-    </div>
-    <div class="overlay"></div>
-    <div class="menu-items">
-        <div class="app">
-            <p class="nav-label"><span>Main Features</span></p>
-            <button class="heighlight p-button" id="sql-view-btn">SQL View</button>
-            <button id="make-note-btn" class="p-button">Make a note</button>
-        </div>
-        <div class="service">
-            <p class="nav-label"><span>Preferences</span></p>
-            <button class="p-button" id="about">about</button>
-            <button class="p-button" id="help">help</button>
-        </div>
-    </div>
-    <main class="container">
+<body class="bg-black text-white font-sans overflow-hidden h-screen flex flex-col">
 
-        <header>
-            <div style="display: flex;">
-                <img src="logo.svg" alt="SQL Viewer Logo" style="width: 45px; height: 45px; transform: scale(2); transform-origin: center;">
-                <h1 class="logo">SQL Viewer from <span class="accent">Motion Mind</span></h1>
+    <!-- Navbar -->
+    <nav class="border-b border-white/10 h-16 flex items-center justify-between px-6 shrink-0 bg-black/80 backdrop-blur-md z-50">
+        <div class="flex items-center gap-4">
+            <button id="mobile-sidebar-toggle" class="lg:hidden text-white/60 hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+            <div class="flex items-center gap-3">
+                <img src="sql_logo.png" alt="Logo" class="w-8 h-8 rounded shadow-lg shadow-white/5">
+                <h1 class="text-xs font-black uppercase tracking-[0.4em] pt-1 hidden sm:block">SQL Viewer <span class="text-white/20">v2.0</span></h1>
             </div>
-            <p class="subtitle">Minimalist SQLite Viewer & Note Engine</p>
-        </header>
+        </div>
 
-        <section class="grid">
-            <div class="card">
-                <div class="card-header">
-                    <h3>SQLite Viewer</h3>
+        <div class="flex items-center gap-2 sm:gap-6">
+            <div class="hidden md:flex gap-4 text-[10px] uppercase font-bold tracking-widest text-white/40">
+                <a href="about.html" class="hover:text-white transition-colors">About</a>
+                <a href="help.html" class="hover:text-white transition-colors">Help</a>
+            </div>
+            <label class="cursor-pointer group flex items-center gap-2 bg-white text-black px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-zinc-200 transition-all active:scale-95 shadow-lg shadow-white/10">
+                <span>Mount DB</span>
+                <input type="file" id="db-upload" accept=".sqlite,.db,.sqlite3" class="hidden">
+            </label>
+        </div>
+    </nav>
+
+    <!-- Main Workspace -->
+    <main class="flex flex-1 overflow-hidden relative">
+        
+        <!-- Sidebar: Table List -->
+        <aside id="sidebar" class="fixed inset-y-0 left-0 transform -translate-x-full lg:relative lg:translate-x-0 transition-transform duration-300 w-72 bg-black border-r border-white/5 z-40 flex flex-col overflow-hidden">
+            <div class="p-6 border-b border-white/5 flex justify-between items-center">
+                <h2 class="text-[10px] font-black uppercase tracking-[0.2em] text-white/30 italic underline decoration-white/10 underline-offset-8">Structure</h2>
+                <button id="close-sidebar-mobile" class="lg:hidden text-white/40 hover:text-white">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div id="table-list" class="flex-1 overflow-y-auto custom-scrollbar py-4 px-2 space-y-1">
+                <div class="p-10 text-center opacity-10 italic text-xs uppercase tracking-widest">No Database Loaded</div>
+            </div>
+        </aside>
+
+        <!-- Dynamic Content -->
+        <div id="content-area" class="flex-1 flex flex-col min-w-0 bg-zinc-950/20">
+            
+            <!-- Global Data Header (Replacing Command Panel) -->
+            <section id="table-header" class="h-14 border-b border-white/5 flex items-center justify-between px-6 bg-black shrink-0">
+                <div class="flex items-center gap-4">
+                    <span class="text-[10px] font-black uppercase tracking-[0.3em] text-white/20 italic">Active Workspace /</span>
+                    <span class="text-xs font-black uppercase tracking-widest text-white" id="current-table-name">SELECT_STATE</span>
                 </div>
-                <div class="upload-box">
-                    <input type="file" id="db-upload" hidden accept=".db, .sqlite">
-                    <label for="db-upload" class="upload-label">Open a Database File</label>
+                <div class="flex items-center gap-4">
+                    <div id="status-ledger" class="hidden md:flex items-center gap-3 pr-4 border-r border-white/10">
+                        <span class="text-[9px] font-bold text-white/20 uppercase tracking-widest">Dataset:</span>
+                        <span id="rows-info" class="text-[10px] font-mono text-white/60">0 ROWS</span>
+                    </div>
+                    <!-- Scroll Controls -->
+                    <div class="flex items-center bg-white/5 rounded-md p-1">
+                        <button id="scroll-left" class="p-1.5 hover:bg-white/10 text-white/40 hover:text-white transition-colors" title="Scroll Left">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                        </button>
+                        <div class="w-[1px] h-4 bg-white/10 mx-1"></div>
+                        <button id="scroll-right" class="p-1.5 hover:bg-white/10 text-white/40 hover:text-white transition-colors" title="Scroll Right">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        </button>
+                    </div>
+                    <button id="refresh-view" class="text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-white flex items-center gap-2">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                        Refresh Kernel
+                    </button>
                 </div>
-                <div id="db-output" class="output-console">
-                    <span class="placeholder">No Database Selected! ⚠</span>
+            </section>
+
+            <!-- Unified Results Section (Full Height) -->
+            <section id="results-pane" class="flex-1 flex flex-col min-h-0 bg-black relative">
+                <!-- Table Content -->
+                <div id="db-output" class="flex-1 overflow-auto relative custom-scrollbar">
+                    <div class="h-full flex items-center justify-center text-white/10 uppercase tracking-[2em] font-black text-center text-[10px]">Ready For Mount</div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Inspector Drawer (Right) -->
+        <aside id="inspector" class="fixed inset-y-0 right-0 w-full sm:w-96 bg-zinc-950 border-l border-white/10 transform translate-x-full transition-transform duration-300 z-[60] flex flex-col p-6 shadow-2xl">
+            <div class="flex items-center justify-between mb-8 border-b border-white/5 pb-4">
+                <div>
+                    <h3 class="text-[10px] font-black uppercase tracking-widest text-white/40 mb-1">Inspector</h3>
+                    <p id="meta-column" class="text-xs font-mono text-white/80">NULL_PTR</p>
+                </div>
+                <button id="close-inspector" class="text-white/20 hover:text-white">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+
+            <div class="flex-1 space-y-6">
+                <div>
+                    <label class="text-[9px] uppercase tracking-tighter text-white/20 mb-2 block">Source Table</label>
+                    <div id="meta-table" class="bg-white/5 p-3 text-[11px] font-bold text-white/40 border border-white/5">Unknown</div>
+                </div>
+                
+                <div class="flex-1">
+                    <label class="text-[9px] uppercase tracking-tighter text-white/20 mb-2 block">Data Buffer</label>
+                    <textarea id="cell-value-editor" class="w-full h-40 bg-black border border-white/10 p-4 text-xs font-mono text-white/90 focus:border-white/40 outline-none transition-all resize-none custom-scrollbar"></textarea>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3 pt-6 border-t border-white/5">
+                    <button id="copy-cell" class="bg-white/[0.05] hover:bg-white/[0.1] text-white/60 hover:text-white py-3 rounded text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 transition-all active:scale-95">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+                        Copy
+                    </button>
+                    <button id="delete-cell" class="bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300 py-3 rounded text-[10px] font-black uppercase tracking-widest transition-all active:scale-95">
+                        Nullify
+                    </button>
+                    <button id="save-cell" class="col-span-2 bg-white text-black hover:bg-zinc-200 py-4 rounded text-[10px] font-black uppercase tracking-widest shadow-xl transition-all active:scale-95">
+                        Commit Changes
+                    </button>
                 </div>
             </div>
-        </section>
+            
+            <div class="text-[9px] text-white/10 uppercase tracking-widest text-center mt-4">Integrity Hash: <span id="integrity-hash">Verified</span></div>
+        </aside>
+
     </main>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
-    <script type="module" src="./js/main.js"></script>
-    <script type="module" src="./js/style.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/sql/sql.min.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
