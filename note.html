@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Viewer | Scratchpad & Notes</title>
+
+    <meta name="description" content="Quick scratchpad and note-taking tool integrated with SQL Viewer. Save query snippets, table structures, and execution notes locally.">
+    
+    <!-- Canonical Tag -->
+    <link rel="canonical" href="https://sql-viewer-chi.vercel.app/note.html">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="sql_logo.png">
+</head>
+<body class="bg-black text-white font-sans overflow-hidden h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="border-b border-white/10 h-16 flex items-center justify-between px-6 shrink-0 bg-black/80 backdrop-blur-md z-50">
+        <div class="flex items-center gap-4">
+            <div class="flex items-center gap-3">
+                <a href="index.html" class="flex items-center gap-3">
+                    <img src="sql_logo.png" alt="SQL Viewer Logo" class="w-8 h-8 rounded shadow-lg shadow-white/5">
+                    <h1 class="text-xs font-black uppercase tracking-[0.4em] pt-1 hidden sm:block">SQL Viewer <span class="text-white/20">v2.0</span></h1>
+                </a>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-2 sm:gap-6">
+            <div class="flex gap-4 text-[10px] uppercase font-bold tracking-widest text-white/40">
+                <a href="index.html" class="hover:text-white transition-colors">Workspace</a>
+                <a href="about.html" class="hover:text-white transition-colors">About</a>
+                <a href="help.html" class="hover:text-white transition-colors">Help</a>
+                <a href="note.html" class="text-white transition-colors underline underline-offset-4 decoration-white/40">Note</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Workspace -->
+    <main class="flex-1 flex flex-col min-w-0 bg-zinc-950/20 overflow-hidden relative">
+        
+        <!-- Header Controls -->
+        <section class="h-14 border-b border-white/5 flex items-center justify-between px-6 bg-black shrink-0">
+            <div class="flex items-center gap-4">
+                <span class="text-[10px] font-black uppercase tracking-[0.3em] text-white/20 italic">System Log /</span>
+                <span class="text-xs font-black uppercase tracking-widest text-white">SCRATCHPAD_BUFFER</span>
+            </div>
+            
+            <div class="flex items-center gap-3">
+                <button id="clear-note" class="text-[10px] font-black uppercase tracking-widest text-red-400/60 hover:text-red-400 px-3 py-1.5 rounded hover:bg-red-500/10 transition-all">
+                    Clear Buffer
+                </button>
+                <button id="copy-note" class="text-[10px] font-black uppercase tracking-widest text-white/60 hover:text-white bg-white/5 hover:bg-white/10 px-3 py-1.5 rounded transition-all">
+                    Copy
+                </button>
+                <button id="download-note" class="text-[10px] font-black uppercase tracking-widest text-black bg-white hover:bg-zinc-200 px-4 py-1.5 rounded font-black transition-all active:scale-95">
+                    Export .TXT
+                </button>
+            </div>
+        </section>
+
+        <!-- Editor Area -->
+        <section class="flex-1 p-6 bg-black flex flex-col relative overflow-hidden">
+            <textarea 
+                id="note-editor" 
+                placeholder="// Write query drafts, notes, or temporary SQL schemas here...&#10;// Notes are automatically saved in your browser's local storage."
+                class="w-full h-full bg-zinc-950/50 border border-white/10 rounded-lg p-6 text-sm font-mono text-white/90 focus:border-white/30 outline-none transition-all resize-none custom-scrollbar leading-relaxed"
+                spellcheck="false"
+            ></textarea>
+
+            <!-- Bottom Indicator -->
+            <div class="absolute bottom-10 right-10 pointer-events-none text-[9px] uppercase tracking-widest text-white/20 font-mono bg-black/80 px-3 py-1 rounded border border-white/5">
+                Status: <span id="save-status" class="text-emerald-400">Synced</span>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        const noteEditor = document.getElementById('note-editor');
+        const saveStatus = document.getElementById('save-status');
+
+        // Load saved notes on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedText = localStorage.getItem('sql_viewer_notes');
+            if (savedText) {
+                noteEditor.value = savedText;
+            }
+        });
+
+        // Auto Save to LocalStorage
+        let timeout = null;
+        noteEditor.addEventListener('input', () => {
+            saveStatus.textContent = "Saving...";
+            saveStatus.className = "text-yellow-400";
+            
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                localStorage.setItem('sql_viewer_notes', noteEditor.value);
+                saveStatus.textContent = "Synced";
+                saveStatus.className = "text-emerald-400";
+            }, 500);
+        });
+
+        // Clear Note
+        document.getElementById('clear-note').addEventListener('click', () => {
+            if (confirm("Are you sure you want to clear your scratchpad?")) {
+                noteEditor.value = '';
+                localStorage.removeItem('sql_viewer_notes');
+                saveStatus.textContent = "Cleared";
+                saveStatus.className = "text-red-400";
+            }
+        });
+
+        // Copy Note
+        document.getElementById('copy-note').addEventListener('click', () => {
+            if(!noteEditor.value.trim()) return;
+            navigator.clipboard.writeText(noteEditor.value);
+            const btn = document.getElementById('copy-note');
+            btn.textContent = "Copied!";
+            setTimeout(() => btn.textContent = "Copy", 1500);
+        });
+
+        // Download Note
+        document.getElementById('download-note').addEventListener('click', () => {
+            if(!noteEditor.value.trim()) return;
+            const blob = new Blob([noteEditor.value], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'sql-viewer-notes.txt';
+            a.click();
+            URL.revokeObjectURL(url);
+        });
+    </script>
+</body>
+</html>
